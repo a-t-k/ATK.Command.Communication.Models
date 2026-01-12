@@ -1,0 +1,7 @@
+<Solution>
+  <Folder Name="/.documentation/" />
+  <Folder Name="/.editorconfig/">
+    <File Path=".editorconfig" />
+  </Folder>
+  <Project Path="WebCommunicationModels.csproj" />
+</Solution>
