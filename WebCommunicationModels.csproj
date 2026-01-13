@@ -1,11 +1,11 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
-        <TargetFramework>net10.0</TargetFramework>
+        <TargetFramework>netstandard2.1</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <OutputType>library</OutputType>
         <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
         <Title>Simple WebCommunicationModels.</Title>
-        <Version>0.0.1</Version>
+        <Version>0.0.2</Version>
         <Description>A simple .NET Standard 2.1 class library with reusable data models for web communication.</Description>
         <RepositoryUrl>https://github.com/a-t-k/WebCommunicationModels/</RepositoryUrl>
         <PackageLicenseFile>LICENSE</PackageLicenseFile>
