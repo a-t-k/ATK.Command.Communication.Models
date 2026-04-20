@@ -4,10 +4,10 @@
         <ImplicitUsings>disable</ImplicitUsings>
         <OutputType>library</OutputType>
         <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-        <Title>Simple WebCommunicationModels.</Title>
+        <Title>Simple Communication Models.</Title>
         <Version>0.0.2</Version>
-        <Description>A simple .NET Standard 2.1 class library with reusable data models for web communication.</Description>
-        <RepositoryUrl>https://github.com/a-t-k/WebCommunicationModels/</RepositoryUrl>
+        <Description>A simple .NET Standard 2.1 class library with reusable data models for communication.</Description>
+        <RepositoryUrl>https://github.com/a-t-k/</RepositoryUrl>
         <PackageLicenseFile>LICENSE</PackageLicenseFile>
         <PackageReadmeFile>README.md</PackageReadmeFile>
         <IncludeContentInPack>true</IncludeContentInPack>

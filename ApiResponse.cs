@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace WebCommunicationModels
+namespace ATK.Command.Communication.Models
 {
     /// <summary>
     /// The API response object.

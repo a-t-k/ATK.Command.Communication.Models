@@ -1,4 +1,4 @@
-namespace WebCommunicationModels
+namespace ATK.Command.Communication.Models
 {
     /// <summary>
     /// The notification class.

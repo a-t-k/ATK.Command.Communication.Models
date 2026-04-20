@@ -7,5 +7,5 @@
   <Folder Name="/.editorconfig/">
     <File Path=".editorconfig" />
   </Folder>
-  <Project Path="WebCommunicationModels.csproj" />
+  <Project Path="ATK.Command.Communication.Models.csproj" />
 </Solution>

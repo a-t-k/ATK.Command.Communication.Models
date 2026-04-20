@@ -1,6 +1,6 @@
 using System;
 
-namespace WebCommunicationModels
+namespace ATK.Command.Communication.Models
 {
     /// <summary>
     /// Presents the model for the upload or download files.

@@ -1,92 +1,93 @@
 # WebCommunicationModels
 
-Eine einfache .NET Standard 2.1 Klassenbibliothek mit wiederverwendbaren Datenmodellen für Web-Kommunikation.
+A simple .NET Standard 2.1 class library with reusable data models for web communication.
 
-## Übersicht
+## Overview
 
-Dieses Projekt bietet standardisierte Modelle für die Kommunikation zwischen Web-APIs und Clients. Die Modelle ermöglichen eine konsistente Struktur für API-Antworten, Pagination, Benachrichtigungen und Dateiverarbeitung.
+This project provides standardized models for communication between web APIs and clients. The models enable a consistent structure for API responses, pagination, notifications, and file processing.
 
-## Modelle
+## Models
 
 ### ApiResponse<T>
-Standardisierte API-Antwortstruktur mit generischem Datentyp.
+Standardized API response structure with generic data type.
 
-**Eigenschaften:**
-- `Status`: Antwortstatus (`"success"`, `"fail"`, `"error"`, `"forbidden"`)
-- `Data`: Generische Daten vom Typ T
-- `Message`: Beschreibung der Antwort
-- `Notifications`: Liste von Benachrichtigungen
+**Properties:**
+- `Status`: Response status (`"success"`, `"fail"`, `"error"`, `"forbidden"`)
+- `Data`: Generic data of type T
+- `Message`: Description of the response
+- `Notifications`: List of notifications
 
-**Hilfsmethoden:**
-- `Success(data, message)`: Erstellt erfolgreiche Antwort
-- `Fail(data, message)`: Erstellt Fehler-Antwort
-- `Error(data, message)`: Erstellt Error-Antwort
-- `Forbidden(data, message)`: Erstellt Verboten-Antwort
+**Helper Methods:**
+- `Success(data, message)`: Creates successful response
+- `Fail(data, message)`: Creates fail response
+- `Error(data, message)`: Creates error response
+- `Forbidden(data, message)`: Creates forbidden response
 
 ### Notification
-Benachrichtigungsmodell für Client-Nachrichten.
+Notification model for client messages.
 
-**Eigenschaften:**
-- `Severity`: Art der Benachrichtigung (`"success"`, `"info"`, `"warning"`, `"error"`)
-- `Message`: Benachrichtigungstext
-- `Title`: Titel (optional)
-- `Variables`: Zusätzliche Variablen (optional)
+**Properties:**
+- `Severity`: Type of notification (`"success"`, `"info"`, `"warning"`, `"error"`)
+- `Message`: Notification text
+- `Title`: Title (optional)
+- `Variables`: Additional variables (optional)
 
-**Hilfsmethoden:**
+**Helper Methods:**
 - `Success(message, title, variables)`
 - `Info(message, title, variables)`
 - `Warning(message, title, variables)`
 - `Error(message, title, variables)`
 
 ### FileModel
-Modell für Datei-Upload und -Download mit Base64-Unterstützung.
+Model for file upload and download with Base64 support.
 
-**Eigenschaften:**
-- `Content`: Binärer Dateiinhalt (`byte[]`)
-- `Base64EncodedContent`: Base64-kodierter Dateiinhalt (`string`)
-- `Name`: Dateiname
-- `ContentType`: MIME-Type (z.B. `"application/pdf"`)
+**Properties:**
+- `Content`: Binary file content (`byte[]`)
+- `Base64EncodedContent`: Base64-encoded file content (`string`)
+- `Name`: File name
+- `ContentType`: MIME-Type (e.g., `"application/pdf"`)
 
-**Methoden:**
-- `ToBase64()`: Konvertiert Binär zu Base64 (löscht Original)
-- `FromBase64()`: Konvertiert Base64 zu Binär (löscht Base64)
+**Methods:**
+- `ToBase64()`: Converts binary to Base64 (deletes original)
+- `FromBase64()`: Converts Base64 to binary (deletes Base64)
 
 ### Paging
-Parameter für Datenpagination.
+Parameters for data pagination.
 
-**Eigenschaften:**
-- `Filter`: Suchfilter (Standard: `""`)
-- `Skip`: Übersprungene Datensätze (Standard: `0`)
-- `Take`: Anzahl abzurufender Datensätze (Standard: `10`)
+**Properties:**
+- `Filter`: Search filter (default: `""`)
+- `Skip`: Number of records to skip (default: `0`)
+- `Take`: Number of records to retrieve (default: `10`)
 
 ### PaginationResponse<T>
-Antwort mit paginierten Daten.
+Response with paginated data.
 
-**Eigenschaften:**
-- `Total`: Gesamtanzahl der Datensätze
-- `Items`: Abgerufene Datensätze
+**Properties:**
+- `Total`: Total number of records
+- `Items`: Retrieved records
 
-## Anforderungen
+## Requirements
 
-- .NET Standard 2.1 oder höher
-- C# 8.0 oder höher
+- .NET Standard 2.1 or higher
+- C# 8.0 or higher
 
-## Verwendungsbeispiel
+## Usage Example
 
 ``` csharp
-// Beispiel für die Verwendung von ApiResponse
-var response = ApiResponse<string>.Success("Daten erfolgreich geladen", "Die Anfrage war erfolgreich");
+// Example usage of ApiResponse 
+var response = ApiResponse<string>.Success("Data loaded successfully", "Request was successful"); if (response.IsSuccess) { Console.WriteLine(response.Message); }
 
-// Beispiel für die Verwendung von Notification
-var notification = Notification.Success("Die Datei wurde hochgeladen", "Hochladen erfolgreich");
+// Example usage of Notification 
+var notification = Notification.Success("File has been uploaded", "Upload successful"); response.Notifications.Add(notification);
 
-// Beispiel für die Verwendung von FileModel
-var fileModel = new FileModel
-{
-    Name = "beispiel.pdf",
-    ContentType = "application/pdf"
-};
-fileModel.FromBase64("JVBERi0xLjQKJaqrrw0K..."); // Base64 string gekürzt
-var base64String = fileModel.ToBase64();
+// Example usage of FileModel 
+var fileModel = new FileModel { Name = "example.pdf", ContentType = "application/pdf", Content = fileBytes }; fileModel.ToBase64(); var base64String = fileModel.Base64EncodedContent;
+
+// Example usage of Paging 
+var paging = new Paging { Skip = 0, Take = 10, Filter = "search term" };
+
+// Example usage of PaginationResponse 
+var paginatedResponse = new PaginationResponse<User> { Total = 100, Items = users };
+var apiResponse = ApiResponse<PaginationResponse<User>>.Success( paginatedResponse, "Users retrieved successfully" );
 
 ```
