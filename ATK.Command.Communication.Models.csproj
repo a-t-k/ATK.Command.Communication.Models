@@ -5,9 +5,9 @@
         <OutputType>library</OutputType>
         <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
         <Title>Simple Communication Models.</Title>
-        <Version>0.0.2</Version>
+        <Version>0.0.3</Version>
         <Description>A simple .NET Standard 2.1 class library with reusable data models for communication.</Description>
-        <RepositoryUrl>https://github.com/a-t-k/</RepositoryUrl>
+        <RepositoryUrl>https://github.com/a-t-k/ATK.Command.Communication.Models</RepositoryUrl>
         <PackageLicenseFile>LICENSE</PackageLicenseFile>
         <PackageReadmeFile>README.md</PackageReadmeFile>
         <IncludeContentInPack>true</IncludeContentInPack>
