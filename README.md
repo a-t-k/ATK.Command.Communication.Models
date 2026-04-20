@@ -1,93 +1,190 @@
-# WebCommunicationModels
+# ATK.Command.Communication.Models
 
-A simple .NET Standard 2.1 class library with reusable data models for web communication.
+A lightweight .NET Standard 2.1 class library providing reusable data models for web API communication. This library offers essential models for building standardized API responses, handling pagination, managing notifications, and transferring file data.
 
-## Overview
+## Features
 
-This project provides standardized models for communication between web APIs and clients. The models enable a consistent structure for API responses, pagination, notifications, and file processing.
+- **ApiResponse<T>** - Generic API response wrapper with status, data, message, and notifications support
+- **Paging** - Configurable pagination request model with filter, skip, and take parameters
+- **PaginationResponse<T>** - Generic pagination response model for paginated data
+- **Notification** - Notification model with severity levels and factory methods (Success, Info, Warning, Error)
+- **FileModel** - File transfer model with support for both binary and Base64-encoded content
 
-## Models
+## Installation
+
+Install the NuGet package:
+
+```bash
+dotnet add package ATK.Command.Communication.Models
+```
+
+Or using the NuGet Package Manager:
+
+```
+Install-Package ATK.Command.Communication.Models
+```
+
+## Quick Start
+
+### ApiResponse
+
+The `ApiResponse<T>` class provides a standardized API response format with status tracking and notification support:
+
+```csharp
+using ATK.Command.Communication.Models;
+
+// Create a successful response
+var response = new ApiResponse<User>
+{
+    Status = "success",
+    Data = user,
+    Message = "User retrieved successfully"
+};
+
+// Check response status
+if (response.IsSuccess)
+{
+    // Handle success
+}
+
+// Add notifications
+response.Notifications.Add(Notification.Info("Data loaded from cache"));
+```
+
+### Pagination
+
+Use the `Paging` model for pagination requests and `PaginationResponse<T>` for responses:
+
+```csharp
+// Create a paging request
+var paging = new Paging
+{
+    Filter = "active",
+    Skip = 0,
+    Take = 20
+};
+
+// Create a paginated response
+var response = new PaginationResponse<User>
+{
+    Total = 150,
+    Items = users
+};
+```
+
+### Notifications
+
+The `Notification` class provides factory methods for creating different severity levels:
+
+```csharp
+// Create notifications using factory methods
+var success = Notification.Success("Operation completed", "Success", new { userId = 123 });
+var info = Notification.Info("This is informational", "Info");
+var warning = Notification.Warning("Please review this", "Warning");
+var error = Notification.Error("An error occurred", "Error");
+
+// Add to response
+response.Notifications.AddRange(new[] { success, info });
+```
+
+### File Transfer
+
+The `FileModel` class supports both binary and Base64-encoded file content:
+
+```csharp
+var fileModel = new FileModel
+{
+    Name = "document.pdf",
+    ContentType = "application/pdf",
+    Content = fileBytes
+};
+
+// Convert to Base64 for transmission
+fileModel.ToBase64();
+
+// Convert back from Base64
+fileModel.FromBase64();
+```
+
+## Models Overview
 
 ### ApiResponse<T>
-Standardized API response structure with generic data type.
+
+Generic API response wrapper for standardized communication.
 
 **Properties:**
-- `Status`: Response status (`"success"`, `"fail"`, `"error"`, `"forbidden"`)
-- `Data`: Generic data of type T
-- `Message`: Description of the response
-- `Notifications`: List of notifications
+- `Status` - Response status (success, fail, error, forbidden)
+- `Data` - The response payload of type T
+- `Message` - Additional response message
+- `Notifications` - List of notification objects
 
-**Helper Methods:**
-- `Success(data, message)`: Creates successful response
-- `Fail(data, message)`: Creates fail response
-- `Error(data, message)`: Creates error response
-- `Forbidden(data, message)`: Creates forbidden response
+**Methods:**
+- `IsSuccess` - Check if status is "success"
+- `IsFail` - Check if status is "fail"
+- `IsForbidden` - Check if status is "forbidden"
+
+### Paging
+
+Request model for paginating data retrieval.
+
+**Properties:**
+- `Filter` - Search/filter term (default: empty string)
+- `Skip` - Number of records to skip (default: 0)
+- `Take` - Number of records to retrieve (default: 10)
+
+### PaginationResponse<T>
+
+Generic response model for paginated data.
+
+**Properties:**
+- `Total` - Total number of items available
+- `Items` - Collection of paginated items
 
 ### Notification
-Notification model for client messages.
+
+Notification object with severity levels.
 
 **Properties:**
-- `Severity`: Type of notification (`"success"`, `"info"`, `"warning"`, `"error"`)
-- `Message`: Notification text
-- `Title`: Title (optional)
-- `Variables`: Additional variables (optional)
+- `Severity` - Severity level (success, info, warning, error)
+- `Message` - Notification message
+- `Title` - Notification title
+- `Variables` - Additional data/context
 
-**Helper Methods:**
+**Factory Methods:**
 - `Success(message, title, variables)`
 - `Info(message, title, variables)`
 - `Warning(message, title, variables)`
 - `Error(message, title, variables)`
 
 ### FileModel
-Model for file upload and download with Base64 support.
+
+File transfer model supporting binary and Base64 encoding.
 
 **Properties:**
-- `Content`: Binary file content (`byte[]`)
-- `Base64EncodedContent`: Base64-encoded file content (`string`)
-- `Name`: File name
-- `ContentType`: MIME-Type (e.g., `"application/pdf"`)
+- `Content` - Binary file content (byte array)
+- `Base64EncodedContent` - Base64-encoded file content
+- `Name` - File name
+- `ContentType` - MIME type
 
 **Methods:**
-- `ToBase64()`: Converts binary to Base64 (deletes original)
-- `FromBase64()`: Converts Base64 to binary (deletes Base64)
-
-### Paging
-Parameters for data pagination.
-
-**Properties:**
-- `Filter`: Search filter (default: `""`)
-- `Skip`: Number of records to skip (default: `0`)
-- `Take`: Number of records to retrieve (default: `10`)
-
-### PaginationResponse<T>
-Response with paginated data.
-
-**Properties:**
-- `Total`: Total number of records
-- `Items`: Retrieved records
+- `ToBase64()` - Convert binary content to Base64
+- `FromBase64()` - Convert Base64 content to binary
 
 ## Requirements
 
 - .NET Standard 2.1 or higher
-- C# 8.0 or higher
+- .NET Framework 4.7.2+
+- .NET Core 3.0+
+- .NET 5.0+
 
-## Usage Example
+## License
 
-``` csharp
-// Example usage of ApiResponse 
-var response = ApiResponse<string>.Success("Data loaded successfully", "Request was successful"); if (response.IsSuccess) { Console.WriteLine(response.Message); }
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-// Example usage of Notification 
-var notification = Notification.Success("File has been uploaded", "Upload successful"); response.Notifications.Add(notification);
+## Repository
 
-// Example usage of FileModel 
-var fileModel = new FileModel { Name = "example.pdf", ContentType = "application/pdf", Content = fileBytes }; fileModel.ToBase64(); var base64String = fileModel.Base64EncodedContent;
+GitHub: [a-t-k/WebCommunicationModels](https://github.com/a-t-k/WebCommunicationModels)
 
-// Example usage of Paging 
-var paging = new Paging { Skip = 0, Take = 10, Filter = "search term" };
+## Version History
 
-// Example usage of PaginationResponse 
-var paginatedResponse = new PaginationResponse<User> { Total = 100, Items = users };
-var apiResponse = ApiResponse<PaginationResponse<User>>.Success( paginatedResponse, "Users retrieved successfully" );
-
-```
+**0.0.3** - Current stable release

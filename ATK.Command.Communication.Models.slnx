@@ -1,7 +1,6 @@
 <Solution>
   <Folder Name="/.documentation/">
     <File Path="LICENSE" />
-    <File Path="README.EN.md" />
     <File Path="README.md" />
   </Folder>
   <Folder Name="/.editorconfig/">
